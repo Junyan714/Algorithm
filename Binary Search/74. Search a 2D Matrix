@@ -1,0 +1,22 @@
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        m, n = len(matrix), len(matrix[0])
+        left, right = 0, m * n - 1
+        
+        while left + 1 < right:
+            mid = (left + right) // 2
+            i, j = mid // n, mid % n
+            
+            if matrix[i][j] <= target:
+                left = mid
+            else:
+                right = mid
+                
+        i_left, j_left = left // n, left % n
+        i_right, j_right = right // n, right % n
+        
+
+        if matrix[i_left][j_left] == target or matrix[i_right][j_right] == target:
+            return True
+        
+        return False
