@@ -1,3 +1,67 @@
+Java:
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        if (nums == null || nums.length == 0){
+            return new int[]{-1,-1};
+        }
+        
+        int left = 0;
+        int right = nums.length - 1;
+        
+        int first = findFirst(nums, target, left, right);
+        int last = findLast(nums, target, left, right);
+        
+        if (first != -1 && last != -1){
+            return new int[]{first, last};
+        }else if(first != -1 || last != -1){
+            return new int[]{Math.max(first, last), Math.max(first, last)};
+        }else{
+            return new int[]{-1, -1};
+        }
+        
+    }
+    
+    public int findFirst(int[] nums, int target, int left, int right){
+        while (left + 1 < right){
+            int pivot = left + (right - left) / 2;
+            
+            if (nums[pivot] >= target){
+                right = pivot;
+            }else{
+                left = pivot;
+            }
+        }
+        
+        if (nums[left] == target){
+            return left;
+        }else if (nums[right] == target){
+            return right;
+        }else{
+            return -1;
+        }
+    }
+    
+    public int findLast(int[] nums, int target, int left, int right){
+        while (left + 1 < right){
+            int pivot = left + (right - left) / 2;
+            
+            if (nums[pivot] > target){
+                right = pivot;
+            }else{
+                left = pivot;
+            }
+        }
+        
+        if (nums[right] == target){
+            return right;
+        }else if (nums[left] == target){
+            return left;
+        }else{
+            return -1;
+        }
+    }
+}
+Python:
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
         if len(nums) == 0:
