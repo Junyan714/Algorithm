@@ -1,3 +1,38 @@
+Given a non-negative integer x, compute and return the square root of x.
+
+Since the return type is an integer, the decimal digits are truncated, and only the integer part of the result is returned.
+
+Java: 
+class Solution {
+    public int mySqrt(int x) {
+        if (x == 1) {
+            return 1;
+        }
+        
+        long left = 0, right = x / 2;
+        while (left + 1 < right) {
+            long pivot = left + (right - left) / 2;
+            
+            if (pivot * pivot <= x) {
+                left = pivot;
+            }else{
+                right = pivot;
+            }
+        }
+        
+        if (right * right <= x) {
+            return (int)right;
+        }else{
+            return (int)left;
+        }
+    }
+}
+
+
+
+
+
+
 class Solution:
     def mySqrt(self, x: int) -> int:
         if x == 1:
