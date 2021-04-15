@@ -1,0 +1,38 @@
+Given an integer array nums which is sorted in ascending order 
+and all of its elements are unique and given also an integer k, return the kth missing number starting from the leftmost number of the array.
+
+
+class Solution {
+    public int missingElement(int[] nums, int k) {
+        int[] missNums = new int[nums.length];
+        missNums[0] = 0;
+        
+        
+        for (int i = 1; i < nums.length; i++) {
+            missNums[i] = missNums[i - 1] + nums[i] - nums[i - 1] - 1;
+        }
+        
+
+        int pivot, left = 0, right = nums.length - 1;
+        while (left + 1 < right) {
+            pivot = left + (right - left) / 2;
+            if (missNums[pivot] < k) {
+                left = pivot;
+            }else{
+                right = pivot;
+            }
+        }
+        
+        int res = 0;
+        if (missNums[right] < k) {
+            return nums[right] + k - missNums[right];
+        }else if (missNums[left] == k) {
+            res = left;
+        }else {
+            res = right;
+        }
+        
+
+        return nums[res] - missNums[res] + k - 1;
+    }
+}
