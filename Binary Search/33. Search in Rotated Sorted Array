@@ -1,3 +1,44 @@
+Java:
+class Solution {
+    public int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        
+        while (left + 1 < right){
+            int pivot = left + (right - left) / 2;
+            
+            if (nums[pivot] == target){
+                return pivot;
+            }
+            
+            if (nums[pivot] > nums[left]) {
+                if (nums[left] <= target && target < nums[pivot]){
+                    right = pivot;
+                }else{
+                    left = pivot;
+                }
+            }else{
+                if (nums[right] >= target && target > nums[pivot]){
+                    left = pivot;
+                }else{
+                    right = pivot;
+                }
+            }
+        }
+        
+        if (nums[left] == target){
+            return left;
+        }else if (nums[right] == target){
+            return right;
+        }else{
+            return -1;
+        }
+        
+    }
+}
+
+
+Python:
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         left, right = 0, len(nums) - 1
