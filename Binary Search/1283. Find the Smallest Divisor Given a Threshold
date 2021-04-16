@@ -1,0 +1,53 @@
+Given an array of integers nums and an integer threshold, we will choose a positive integer divisor, 
+divide all the array by it, and sum the division's result. Find the smallest divisor such that the result mentioned above is less than or equal to threshold.
+
+Each result of the division is rounded to the nearest integer greater than or equal to that element. (For example: 7/3 = 3 and 10/2 = 5).
+
+It is guaranteed that there will be an answer.
+
+
+import java.util.Collections;
+class Solution {
+    public int smallestDivisor(int[] nums, int threshold) {
+        int maxNum = 0;
+        for (int num: nums) {
+            if (num > maxNum) {
+                maxNum = num;
+            }
+        }
+        
+        int left = 1, right = maxNum;
+        
+        while (left + 1 < right) {
+            int pivot = left + (right - left) / 2;
+            int res = getSum(nums, pivot);
+            
+
+            if (res > threshold) {
+                left = pivot;
+            }else {
+                right = pivot;
+            }
+        }
+        
+        
+        if (getSum(nums, left) <= threshold) {
+            return left;
+        }else {
+            return right;
+        }
+    }
+    
+    public int getSum(int[] nums, int pivot) {
+        int res = 0;
+        for (int num: nums) {
+            if (num % pivot == 0) {
+                res += num / pivot;
+            }else{
+                res += num / pivot + 1;
+            }
+        }
+        
+        return res;
+    }
+}
