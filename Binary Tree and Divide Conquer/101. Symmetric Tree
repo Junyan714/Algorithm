@@ -1,0 +1,17 @@
+Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        return isSame(root.left, root.right);
+    }
+    
+    public boolean isSame(TreeNode p, TreeNode q) {
+        if (p == null && q == null) {
+            return true;
+        }else if (p == null || q == null) {
+            return false;
+        }else{
+            return p.val == q.val && isSame(p.left, q.right) && isSame(p.right, q.left);
+        }
+    }
+}
