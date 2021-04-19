@@ -1,0 +1,46 @@
+class Solution {
+    public int treeDiameter(int[][] edges) {
+        List<Set<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < edges.length + 1; i++) {
+            graph.add(new HashSet<Integer>());
+        }
+        
+        for (int[] edge: edges) {
+            Integer u = edge[0], v = edge[1];
+            graph.get(u).add(v);
+            graph.get(v).add(u);
+        }
+        
+        int[] nodeDistance = bfs(0, graph);
+        int[] resDistance = bfs(nodeDistance[1], graph);
+        
+        return resDistance[0];
+    }
+    
+    public int[] bfs(int start, List<Set<Integer>> graph) {
+        boolean[] visited = new boolean[graph.size()];
+        visited[start] = true;
+        
+        Deque<Integer> queue = new LinkedList<>();
+        queue.addLast(start);
+        Integer lastNode = start, distance = -1;
+        
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                Integer node = queue.pollFirst();
+                lastNode = node;
+                
+                for (int newNode: graph.get(node)) {
+                    if (!visited[newNode]) {
+                        visited[newNode] = true;
+                        queue.addLast(newNode);
+                    }
+                }
+            }
+            distance++;
+        }
+        
+        return new int[]{distance, lastNode};
+    }
+}
